@@ -18,5 +18,6 @@ def main():
             collection.delete_one(item)
     print("finish removing duplicates")
 
+
 if __name__ == "__main__":
     main()

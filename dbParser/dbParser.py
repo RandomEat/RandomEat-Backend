@@ -1,6 +1,5 @@
 import json
 import re
-import pprint
 
 MANUALLY_INPUT = 0
 
