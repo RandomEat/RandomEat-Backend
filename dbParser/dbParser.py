@@ -1,7 +1,9 @@
 import json
 import re
+from geopy.geocoders import Nominatim
 
 MANUALLY_INPUT = 0
+geolocator = Nominatim(user_agent="random", timeout=10)
 
 
 def parse_one_object(restaurant):
@@ -16,10 +18,18 @@ def parse_one_object(restaurant):
     if price_match:
         price = price_match.group(1)
         output_restaurant_data['price'] = price
+
+    lat = restaurant_info['lat']
+    lon = restaurant_info['lon']
+    location = geolocator.reverse(f"{lat}, {lon}")
+    region = location.raw['address'].get('town') if location.raw['address'].get('town') is not None \
+        else location.raw['address'].get('suburb')
     output_restaurant_data['location'] = {
-        'lat': restaurant_info['lat'],
-        'lon': restaurant_info['lon']
+        'lat': lat,
+        'lon': lon,
+        'region': region
     }
+
     return output_restaurant_data
 
 
@@ -31,11 +41,16 @@ def main():
     json_data = json.loads(content)
     restaurants_data = json_data['data']['blocks']
     out_data = []
+    print("parsing starts")
+    i = 1
     for restaurant_data in restaurants_data:
+        print("parsing restaurant", i)
+        i += 1
         if restaurant_data['type'] == "normal":
             out_data.append(parse_one_object(restaurant_data['dataModule']['restaurant']))
     with open('output.json', "w") as out_f:
         json.dump(out_data, out_f, indent=2, ensure_ascii=False)
+    print("parsing finishes")
 
 
 if __name__ == "__main__":
