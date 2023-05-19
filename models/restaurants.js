@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const restaurantSchema = new mongoose.Schema({
     name: String,
-    location: String,
+    location: {},
     price: String,
-    cuisine: [String]
+    category: [String]
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
