@@ -1,370 +1,442 @@
 [
   {
-    "restaurantId": 13283,
-    "restaurantName": "欢喜·卤肉剁椒拌饭公司",
+    "restaurantId": 903,
+    "restaurantName": "辣椒王Hunan Chilli King (San Gabriel)",
+    "category": [
+      "川湘麻辣"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/903.jpg",
+    "price": "38",
+    "location": {
+      "lat": 34.0795193,
+      "lon": -118.0933572,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 6787,
+    "restaurantName": "Motto Tea Cafe (San Gabriel)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/6787.jpg",
+    "price": "10",
+    "location": {
+      "lat": 34.0789603,
+      "lon": -118.1034247,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 1099,
+    "restaurantName": "千品香 Tasty Thousand Restaurant (Rosemead)",
+    "category": [
+      "地方菜系"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1099.jpg",
+    "price": "25",
+    "location": {
+      "lat": 34.080774,
+      "lon": -118.0773587,
+      "region": "Rosemead"
+    }
+  },
+  {
+    "restaurantId": 1046,
+    "restaurantName": "滋味成都 ZIWEI CHENGDU (Alhambra)",
+    "category": [
+      "川湘麻辣"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1046.jpg",
+    "price": "29",
+    "location": {
+      "lat": 34.0778469,
+      "lon": -118.1324304,
+      "region": "Alhambra"
+    }
+  },
+  {
+    "restaurantId": 990,
+    "restaurantName": "眉州东坡 Meizhou Dongpo (UCLA)",
+    "category": [
+      "川湘麻辣",
+      "家常炒菜"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/990.jpg",
+    "price": "59",
+    "location": {
+      "lat": 34.0590031,
+      "lon": -118.418866,
+      "region": "Century City"
+    }
+  },
+  {
+    "restaurantId": 1100,
+    "restaurantName": "全场75折 (Rowland Heights)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1100.jpg",
+    "price": "6",
+    "location": {
+      "lat": 33.9960762,
+      "lon": -117.9066047,
+      "region": "City of Industry"
+    }
+  },
+  {
+    "restaurantId": 6028,
+    "restaurantName": "讲饮讲食 (Monterey Park)",
+    "category": [
+      "粤菜早茶",
+      "港式茶餐厅"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/6028.jpg",
+    "price": "20",
+    "location": {
+      "lat": 34.0673559,
+      "lon": -118.134824,
+      "region": "Monterey Park"
+    }
+  },
+  {
+    "restaurantId": 884,
+    "restaurantName": "一芳水果茶 (San Gabriel)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/884.jpg",
+    "price": "6",
+    "location": {
+      "lat": 34.0796807,
+      "lon": -118.0934797,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 3515,
+    "restaurantName": "八里亭 (San Gabriel)",
+    "category": [
+      "粤菜早茶",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/3515.jpg",
+    "price": "28",
+    "location": {
+      "lat": 34.0793134,
+      "lon": -118.1042657,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 1137,
+    "restaurantName": "活粥王 (San Gabriel)",
+    "category": [
+      "早点铺",
+      "暖胃粥品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1137.jpg",
+    "price": "36",
+    "location": {
+      "lat": 34.0798301,
+      "lon": -118.1029144,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 13230,
+    "restaurantName": "Alhambra Gogosonic 生活便利店",
+    "category": [
+      "超市便利",
+      "零食饮料"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/13230.jpg",
+    "price": "13",
+    "location": {
+      "lat": 34.0938443,
+      "lon": -118.1291514,
+      "region": "Alhambra"
+    }
+  },
+  {
+    "restaurantId": 1938,
+    "restaurantName": "Coco Fresh Tea & Juice 都可奶茶 (USC)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1938.jpg",
+    "price": "9",
+    "location": {
+      "lat": 34.0491696,
+      "lon": -118.2608507,
+      "region": "Downtown"
+    }
+  },
+  {
+    "restaurantId": 8906,
+    "restaurantName": "潮厢潮汕味 (San Gabriel)",
+    "category": [
+      "粤菜早茶"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/8906.jpg",
+    "price": "25",
+    "location": {
+      "lat": 34.0796861,
+      "lon": -118.1054044,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 9282,
+    "restaurantName": "三喵制茶 (San Gabriel)",
+    "category": [
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/9282.jpg",
+    "price": "6",
+    "location": {
+      "lat": 34.0797077,
+      "lon": -118.0950306,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 1024,
+    "restaurantName": "一芳水果茶｜【💥独家特价$1.99饮品】 (Rowland Heights)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1024.jpg",
+    "price": "4",
+    "location": {
+      "lat": 33.988524,
+      "lon": -117.901511,
+      "region": "Rowland Heights"
+    }
+  },
+  {
+    "restaurantId": 2013,
+    "restaurantName": "1919兰州牛肉面 (Monterery Park)",
+    "category": [
+      ""
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/2013.jpg",
+    "price": "26",
+    "location": {
+      "lat": 34.0694725,
+      "lon": -118.1339631,
+      "region": "Monterey Park"
+    }
+  },
+  {
+    "restaurantId": 1149,
+    "restaurantName": "宽窄巷子 (Rowland Heights)",
+    "category": [
+      "川湘麻辣"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1149.jpg",
+    "price": "31",
+    "location": {
+      "lat": 33.9933116,
+      "lon": -117.9033421,
+      "region": "Rowland Heights"
+    }
+  },
+  {
+    "restaurantId": 665,
+    "restaurantName": "⚡五十岚奶茶 Wushiland Boba (Westfield Century City)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/665.jpg",
+    "price": "11",
+    "location": {
+      "lat": 34.0590031,
+      "lon": -118.418866,
+      "region": "Century City"
+    }
+  },
+  {
+    "restaurantId": 7488,
+    "restaurantName": "吉克邦汉堡 (Alhambra)",
+    "category": [
+      "汉堡炸鸡",
+      "汉堡炸鸡"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/7488.jpg",
+    "price": "25",
+    "location": {
+      "lat": 34.0937828,
+      "lon": -118.1293091,
+      "region": "Alhambra"
+    }
+  },
+  {
+    "restaurantId": 3658,
+    "restaurantName": "仪珈粥铺 (Alhambra)",
+    "category": [
+      "粤菜早茶",
+      "早点铺"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/3658.jpg",
+    "price": "22",
+    "location": {
+      "lat": 34.0766114,
+      "lon": -118.1531805,
+      "region": "Alhambra"
+    }
+  },
+  {
+    "restaurantId": 1640,
+    "restaurantName": "一芳水果茶 Yifang Fruit Tea Sawtelle (UCLA)",
+    "category": [
+      "奶茶饮品",
+      "奶茶饮品"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1640.jpg",
+    "price": "5",
+    "location": {
+      "lat": 34.0407538,
+      "lon": -118.443212,
+      "region": "Sawtelle"
+    }
+  },
+  {
+    "restaurantId": 897,
+    "restaurantName": "王辣鸭 (Monterey Park)",
     "category": [
       "小吃快餐",
       "卤味鸭脖"
     ],
-    "price": "25",
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/897.jpg",
+    "price": "28",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 34.0620427,
+      "lon": -118.124702,
+      "region": "Monterey Park"
     }
   },
   {
-    "restaurantId": 1294,
-    "restaurantName": "香锅麻辣烫 Wok Bar (USC)",
+    "restaurantId": 11938,
+    "restaurantName": "新地 Sunday Bistro (Alhambra)",
     "category": [
-      "麻辣烫冒菜",
-      "香锅干锅"
+      "粤菜早茶",
+      "港式茶餐厅"
     ],
-    "price": "33",
-    "location": {
-      "lat": 34.05997,
-      "lon": -118.2906947
-    }
-  },
-  {
-    "restaurantId": 13413,
-    "restaurantName": "疯狂韩式烤肉碗 (USC)",
-    "category": [
-      "韩式料理"
-    ],
-    "price": "30",
-    "location": {
-      "lat": 34.0318642,
-      "lon": -118.2447808
-    }
-  },
-  {
-    "restaurantId": 12550,
-    "restaurantName": "奶茶小吃铺 Cup O' Joy (USC)",
-    "category": [
-      "奶茶饮品",
-      "小吃快餐"
-    ],
-    "price": "30",
-    "location": {
-      "lat": 34.0244531,
-      "lon": -118.2778003
-    }
-  },
-  {
-    "restaurantId": 11540,
-    "restaurantName": "金牌 ABC Seafood (USC)",
-    "category": [
-      "家常炒菜"
-    ],
-    "price": "25",
-    "location": {
-      "lat": 34.0602688,
-      "lon": -118.238363
-    }
-  },
-  {
-    "restaurantId": 13034,
-    "restaurantName": "小碗烧菜",
-    "category": [
-      "家常炒菜"
-    ],
-    "price": "25",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13352,
-    "restaurantName": "四海豆浆",
-    "category": [
-      "小吃快餐",
-      "早点铺"
-    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/11938.jpg",
     "price": "24",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 34.0782489,
+      "lon": -118.1126189,
+      "region": "Alhambra"
     }
   },
   {
-    "restaurantId": 13330,
-    "restaurantName": "原味店",
+    "restaurantId": 2182,
+    "restaurantName": "川香小厨 (Irvine)",
     "category": [
-      "粤菜早茶"
+      "川湘麻辣"
     ],
-    "price": "37",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13324,
-    "restaurantName": "西安手工面",
-    "category": [
-      "小吃快餐",
-      "早点铺"
-    ],
-    "price": "26",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13322,
-    "restaurantName": "永和豆浆",
-    "category": [
-      "小吃快餐",
-      "早点铺"
-    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/2182.jpg",
     "price": "27",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 33.6690625,
+      "lon": -117.8522066,
+      "region": "Irvine Business Complex"
     }
   },
   {
-    "restaurantId": 13350,
-    "restaurantName": "嘉顿港式西餐",
+    "restaurantId": 8901,
+    "restaurantName": "原味店 (Rosemead)",
     "category": [
-      "汉堡炸鸡"
+      "粤菜早茶",
+      "港式茶餐厅"
     ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/8901.jpg",
+    "price": "20",
+    "location": {
+      "lat": 34.0799465,
+      "lon": -118.0811299,
+      "region": "Rosemead"
+    }
+  },
+  {
+    "restaurantId": 893,
+    "restaurantName": "深井烧腊美食坊 (Monterey Park)",
+    "category": [
+      "粤菜早茶",
+      "早点铺"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/893.jpg",
     "price": "23",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 34.062275,
+      "lon": -118.131383,
+      "region": "Monterey Park"
     }
   },
   {
-    "restaurantId": 13455,
-    "restaurantName": "讲饮讲食",
+    "restaurantId": 297,
+    "restaurantName": "锦城里 Sichuan Impression (Tustin)",
     "category": [
-      "粤菜早茶"
+      "川湘麻辣"
     ],
-    "price": "33",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13328,
-    "restaurantName": "粶鼎记 LuDingJi",
-    "category": [
-      "小吃快餐",
-      "早点铺"
-    ],
-    "price": "37",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13337,
-    "restaurantName": "东北酒家",
-    "category": [
-      "地方菜系"
-    ],
-    "price": "34",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13467,
-    "restaurantName": "云南过桥园",
-    "category": [
-      "地方菜系"
-    ],
-    "price": "31",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13354,
-    "restaurantName": "味鼎",
-    "category": [
-      "火锅串串"
-    ],
-    "price": "34",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13344,
-    "restaurantName": "老刘家烤鱼",
-    "category": [
-      "烧烤烤鱼"
-    ],
-    "price": "34",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13357,
-    "restaurantName": "隆兴记",
-    "category": [
-      "粤菜早茶"
-    ],
-    "price": "30",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13341,
-    "restaurantName": "一品香",
-    "category": [
-      "家常炒菜"
-    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/297.jpg",
     "price": "38",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 33.73516,
+      "lon": -117.8122279,
+      "region": "Tustin"
     }
   },
   {
-    "restaurantId": 13338,
-    "restaurantName": "吉克邦汉堡",
-    "category": [
-      "汉堡炸鸡"
-    ],
-    "price": "27",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13346,
-    "restaurantName": "银记肠粉店",
-    "category": [
-      "小吃快餐",
-      "早点铺"
-    ],
-    "price": "26",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13321,
-    "restaurantName": "关东大院",
-    "category": [
-      "地方菜系"
-    ],
-    "price": "20",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13362,
-    "restaurantName": "钻石饼家Diamond Bakery",
-    "category": [
-      "面包蛋糕"
-    ],
-    "price": "24",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13326,
-    "restaurantName": "洞庭春",
-    "category": [
-      "家常炒菜"
-    ],
-    "price": "33",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13339,
-    "restaurantName": "东北猛男99盖饭",
-    "category": [
-      "地方菜系"
-    ],
-    "price": "16",
-    "location": {
-      "lat": 34.0409281,
-      "lon": -118.2647277
-    }
-  },
-  {
-    "restaurantId": 13359,
-    "restaurantName": "睿雅妈咪小厨",
-    "category": [
-      "家常炒菜"
-    ],
-    "price": "19",
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 945,
-    "restaurantName": "颐丰园水饺 Northern Cafe Dumpling House (USC)",
+    "restaurantId": 1217,
+    "restaurantName": "⚡小陆子清粥 (San Gabriel)",
     "category": [
       "早点铺",
-      "饺子馄饨"
+      "暖胃粥品"
     ],
-    "price": "31",
-    "location": {
-      "lat": 34.0255107,
-      "lon": -118.277352
-    }
-  },
-  {
-    "restaurantId": 13465,
-    "restaurantName": "深井烧腊美食坊",
-    "category": [
-      "粤菜早茶"
-    ],
-    "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
-    }
-  },
-  {
-    "restaurantId": 13463,
-    "restaurantName": "刀郎·新疆特色 (原阿凡提)",
-    "category": [
-      "清真"
-    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/1217.jpg",
     "price": "32",
     "location": {
-      "lat": 34.0408072,
-      "lon": -118.2646357
+      "lat": 34.0795193,
+      "lon": -118.0933572,
+      "region": "San Gabriel"
     }
   },
   {
-    "restaurantId": 11814,
-    "restaurantName": "Katsu Bar (USC)",
+    "restaurantId": 7635,
+    "restaurantName": "⚡芙蓉树下 (San Gabriel)",
     "category": [
-      "日料寿司"
+      "川湘麻辣",
+      "麻辣烫冒菜"
     ],
-    "price": "20",
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/7635.jpg",
+    "price": "26",
     "location": {
-      "lat": 34.0636398,
-      "lon": -118.3056673
+      "lat": 34.0796807,
+      "lon": -118.0934797,
+      "region": "San Gabriel"
+    }
+  },
+  {
+    "restaurantId": 298,
+    "restaurantName": "尔湾夜市 KingFu Master (Irvine)",
+    "category": [
+      "香锅干锅"
+    ],
+    "restaurantPhoto": "https://random-app-bucket.s3.us-west-1.amazonaws.com/restaurantPhotos/298.jpg",
+    "price": "24",
+    "location": {
+      "lat": 33.6686194,
+      "lon": -117.8526179,
+      "region": "Irvine Business Complex"
     }
   }
 ]
