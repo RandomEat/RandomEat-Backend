@@ -7,7 +7,6 @@ env_vars = dotenv_values('.env')
 
 
 def upload_file_to_s3(image_url, bucket_name, object_name):
-    print(image_url, bucket_name, object_name)
     s3 = boto3.client('s3')
     file_path = requests.get(image_url)
     try:

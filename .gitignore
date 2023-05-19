@@ -1,2 +1,4 @@
 dbParser/.env
 dbParser/*.json
+.DS_Store
+dbParser/.idea/
