@@ -1,7 +1,11 @@
 import json
 import re
+import os
 from geopy.geocoders import Nominatim
+from dbUploadPicture import get_restaurant_photo_url
+from dotenv import load_dotenv
 
+load_dotenv()
 MANUALLY_INPUT = 0
 geolocator = Nominatim(user_agent="random", timeout=10)
 
@@ -14,6 +18,10 @@ def parse_one_object(restaurant):
     output_restaurant_data['restaurantName'] = restaurant_name.split('—')[0].strip()
     restaurant_info = restaurant['restaurantInfo']
     output_restaurant_data['category'] = [cate.strip() for cate in restaurant_info['restaurantCategory'].split('/')]
+    output_restaurant_data['restaurantPhoto'] = get_restaurant_photo_url(
+        os.getenv('S3_BUCKET_NAME'),
+        restaurant_info['restaurantPhoto'],
+        restaurant['restaurantId'])
     price_match = re.search(r'人均 \$(\d+)', restaurant['restaurantStateLabel'])
     if price_match:
         price = price_match.group(1)

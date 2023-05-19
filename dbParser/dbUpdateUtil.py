@@ -1,14 +1,14 @@
 from pymongo import MongoClient
 from geopy.geocoders import Nominatim
+from dotenv import dotenv_values
 
-address = "localhost"
-port = 27017
+env_vars = dotenv_values('.env')
 
 geolocator = Nominatim(user_agent="random", timeout=10)
 
 
 def db_update_region():
-    client = MongoClient(address, port)
+    client = MongoClient(env_vars['MONGODB_HOST'], env_vars['MONGODB_PORT'])
     db = client.random  # database
     collection = db.restaurants  # collection
     print("starts updating region")

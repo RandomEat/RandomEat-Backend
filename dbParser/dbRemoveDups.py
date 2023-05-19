@@ -1,17 +1,20 @@
 from pymongo import MongoClient
+from dotenv import dotenv_values
 
-address = "localhost"
-port = 27017
+env_vars = dotenv_values('.env')
 
 
 def main():
-    client = MongoClient(address, port)
+    client = MongoClient(env_vars['MONGODB_HOST'], int(env_vars['MONGODB_PORT']))
     db = client.random  # database
     collection = db.restaurants  # collection
     print("starts removing duplicates")
     patents = []
     count = 0
+    i = 1
     for item in collection.find():
+        print("checking file", i)
+        i += 1
         if item['restaurantId'] not in patents:
             patents.append(item['restaurantId'])
         else:
