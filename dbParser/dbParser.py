@@ -21,13 +21,13 @@ def parse_one_object(restaurant):
 
     lat = restaurant_info['lat']
     lon = restaurant_info['lon']
-    location = geolocator.reverse(f"{lat}, {lon}")
-    region = location.raw['address'].get('town') if location.raw['address'].get('town') is not None \
-        else location.raw['address'].get('suburb')
+    # location = geolocator.reverse(f"{lat}, {lon}")
+    # region = location.raw['address'].get('town') if location.raw['address'].get('town') is not None \
+    #     else location.raw['address'].get('suburb')
     output_restaurant_data['location'] = {
         'lat': lat,
         'lon': lon,
-        'region': region
+        # 'region': region
     }
 
     return output_restaurant_data
@@ -48,7 +48,7 @@ def main():
         i += 1
         if restaurant_data['type'] == "normal":
             out_data.append(parse_one_object(restaurant_data['dataModule']['restaurant']))
-    with open('output.json', "w") as out_f:
+    with open('output.json', "a") as out_f:
         json.dump(out_data, out_f, indent=2, ensure_ascii=False)
     print("parsing finishes")
 
