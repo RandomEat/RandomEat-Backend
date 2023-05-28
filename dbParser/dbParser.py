@@ -1,7 +1,11 @@
 import json
 import re
+import os
 from geopy.geocoders import Nominatim
+from dbUploadPicture import get_restaurant_photo_url
+from dotenv import load_dotenv
 
+load_dotenv()
 MANUALLY_INPUT = 0
 geolocator = Nominatim(user_agent="random", timeout=10)
 
@@ -14,6 +18,11 @@ def parse_one_object(restaurant):
     output_restaurant_data['restaurantName'] = restaurant_name.split('—')[0].strip()
     restaurant_info = restaurant['restaurantInfo']
     output_restaurant_data['category'] = [cate.strip() for cate in restaurant_info['restaurantCategory'].split('/')]
+    output_restaurant_data['restaurantPhoto'] = get_restaurant_photo_url(
+        os.getenv('S3_BUCKET_NAME'),
+        restaurant_info['restaurantPhoto'],
+        restaurant['restaurantId'])
+    output_restaurant_data['rate'] = restaurant_info['rate']
     price_match = re.search(r'人均 \$(\d+)', restaurant['restaurantStateLabel'])
     if price_match:
         price = price_match.group(1)
@@ -21,13 +30,13 @@ def parse_one_object(restaurant):
 
     lat = restaurant_info['lat']
     lon = restaurant_info['lon']
-    location = geolocator.reverse(f"{lat}, {lon}")
-    region = location.raw['address'].get('town') if location.raw['address'].get('town') is not None \
-        else location.raw['address'].get('suburb')
+    # location = geolocator.reverse(f"{lat}, {lon}")
+    # region = location.raw['address'].get('town') if location.raw['address'].get('town') is not None \
+    #     else location.raw['address'].get('suburb')
     output_restaurant_data['location'] = {
         'lat': lat,
         'lon': lon,
-        'region': region
+        # 'region': region
     }
 
     return output_restaurant_data
@@ -48,7 +57,7 @@ def main():
         i += 1
         if restaurant_data['type'] == "normal":
             out_data.append(parse_one_object(restaurant_data['dataModule']['restaurant']))
-    with open('output.json', "w") as out_f:
+    with open('output.json', "a") as out_f:
         json.dump(out_data, out_f, indent=2, ensure_ascii=False)
     print("parsing finishes")
 
