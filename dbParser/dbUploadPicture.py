@@ -16,9 +16,9 @@ def upload_file_to_s3(image_url, bucket_name, object_name):
                       ACL='public-read',
                       ContentType='image/jpeg',
                       ContentDisposition='inline')
-        print("File uploaded successfully.")
+        print("Photo uploaded successfully.")
     except Exception as e:
-        print(f"Error uploading file: {str(e)}")
+        print(f"Error uploading photo: {str(e)}")
 
 
 def store_link_in_mongodb(bucket_name, object_name, restaurant_id):

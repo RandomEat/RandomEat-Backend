@@ -22,6 +22,7 @@ def parse_one_object(restaurant):
         os.getenv('S3_BUCKET_NAME'),
         restaurant_info['restaurantPhoto'],
         restaurant['restaurantId'])
+    output_restaurant_data['rate'] = restaurant_info['rate']
     price_match = re.search(r'人均 \$(\d+)', restaurant['restaurantStateLabel'])
     if price_match:
         price = price_match.group(1)

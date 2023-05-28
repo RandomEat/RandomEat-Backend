@@ -20,7 +20,9 @@ def main():
         else:
             count += 1
             collection.delete_one(item)
-    print("finish removing duplicates, number of removed duplicate:", count)
+    print("finish removing duplicates")
+    print("number of removed duplicate:", count)
+    print("number of documents remaining:", i - count)
 
 
 if __name__ == "__main__":
