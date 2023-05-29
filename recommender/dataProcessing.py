@@ -1,14 +1,13 @@
-import numpy as np
+import os
 from pymongo import MongoClient
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 import pandas as pd
-from sklearn.metrics.pairwise import haversine_distances
 import jieba
 import jieba.analyse
 from math import radians
 
-env_vars = dotenv_values('../dbParser/.env')
-client = MongoClient(env_vars['MONGODB_HOST'], int(env_vars['MONGODB_PORT']))
+load_dotenv('../dbParser/.env')
+client = MongoClient(os.getenv('MONGODB_HOST', os.getenv('MONGODB_PORT')))
 db = client.random  # database
 restaurant_collection = db.restaurants  # collection
 user_collection = db.users

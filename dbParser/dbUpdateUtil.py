@@ -1,11 +1,11 @@
+import os
 from pymongo import MongoClient
 from geopy.geocoders import Nominatim
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
-env_vars = dotenv_values('.env')
-
+load_dotenv('../dbParser/.env')
+client = MongoClient(os.getenv('MONGODB_HOST', os.getenv('MONGODB_PORT')))
 geolocator = Nominatim(user_agent="random", timeout=10)
-client = MongoClient(env_vars['MONGODB_HOST'], int(env_vars['MONGODB_PORT']))
 db = client.random  # database
 restaurant_collection = db.restaurants  # collection
 user_collection = db.users
@@ -36,9 +36,11 @@ def db_get_all_restaurant_id():
 
 def db_update_user_likes(uid, new_likes):
     user = user_collection.find_one({'uid': uid})
-    for like in new_likes:
-        update = {'$set': {f'likes.{like}': 10}}
-        user_collection.update_one({'_id': user['_id']}, update)
+    update = {'$set': {'likes': new_likes}}
+    user_collection.update_one({'_id': user['_id']}, update)
+    # for like in new_likes:
+    #     update = {'$set': {f'likes.{like}': 10}}
+    #     user_collection.update_one({'_id': user['_id']}, update)
 
 
 if __name__ == "__main__":

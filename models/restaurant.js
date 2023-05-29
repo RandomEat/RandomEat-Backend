@@ -4,6 +4,7 @@ const restaurantSchema = new mongoose.Schema({
     name: String,
     location: {},
     price: String,
+    rate: String,
     category: [String]
 })
 
