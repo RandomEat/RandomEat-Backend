@@ -2,3 +2,7 @@ dbParser/.env
 dbParser/*.json
 .DS_Store
 dbParser/.idea/
+.env
+.idea/
+node_modules/
+*.json
