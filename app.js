@@ -6,8 +6,8 @@ require('./models/mongo')
 const Restaurant = require('./models/restaurant')
 const User = require('./models/user');
 const { join } = require('path');
-const APPID = "wxbb5fe9f1b9f1a850"
-const SECRET = "a062f242fb05f99235b1bed647ba641a"
+const APPID = ""
+const SECRET = ""
 const defaultRestaurantsID = [126, 903, 939, 1535, 1801, 5091, 5875, 6781, 8307, 8477]
 
 app.use(express.urlencoded({
