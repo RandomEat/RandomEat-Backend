@@ -6,8 +6,8 @@ require('./models/mongo')
 const Restaurant = require('./models/restaurant')
 const User = require('./models/user');
 const { join } = require('path');
-const APPID = process.env.APPID
-const SECRET = process.env.SECRET
+const APPID = "wxbb5fe9f1b9f1a850"
+const SECRET = "a062f242fb05f99235b1bed647ba641a"
 const defaultRestaurantsID = [126, 903, 939, 1535, 1801, 5091, 5875, 6781, 8307, 8477]
 
 app.use(express.urlencoded({
@@ -19,16 +19,18 @@ app.use(express.json());
 app.get('/getUserProfile', async (req, res) => {
     let code = req.query.userCode; // userCode
     let url = "https://api.weixin.qq.com/sns/jscode2session?&appid="+APPID+"&secret="+SECRET+"&js_code="+code+"&grant_type=authorization_code"
+    console.log(url)
     await axios.get(url)
     .then((response) => {
+        console.log(response)
         const { openid, session_key } = response.data;
         console.log('OpenID:', openid);
         console.log('SessionKey:', session_key);
     })
     .catch((error) => {
-    console.error('Error:', error);
+        console.error('Error:', error);
     });
-    openid = 'random_admin'
+    // openid = 'random_admin'
     User.findOne({ uid: openid })
     .then(async (user) => {
         if (user) {
