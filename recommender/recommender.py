@@ -10,11 +10,12 @@ from dataProcessing import read_user_likes_raw_data
 # def recommend(user_likes):
 user_likes = ast.literal_eval(sys.argv[1])
 sys.stdout.flush()
-all_data = preprocess_data(read_all_restaurant())
+data, pictures = read_all_restaurant()
+preprocessed_all_data, all_data = preprocess_data(data, pictures)
 tfidf = TfidfVectorizer()
-vec = tfidf.fit(all_data['Tags'])
-tfidf_matrix = vec.transform(all_data['Tags'])
-user_liked_restaurants = all_data[all_data['ID'].isin(user_likes)]
+vec = tfidf.fit(preprocessed_all_data['Tags'])
+tfidf_matrix = vec.transform(preprocessed_all_data['Tags'])
+user_liked_restaurants = preprocessed_all_data[preprocessed_all_data['ID'].isin(user_likes)]
 user_profile = ""
 # print(user_liked_restaurants)
 for row, item in user_liked_restaurants.iterrows():
@@ -25,10 +26,7 @@ cosine_similarities = cosine_similarity(user_matrix, tfidf_matrix)
 all_data['similarity'] = cosine_similarities[0]
 recommendations = all_data[~all_data['ID'].isin(user_likes)]
 recommendations.sort_values(by='similarity', ascending=False, inplace=True)
-# for index, row in recommendations.iterrows():
-#     print(json.dumps(row.to_dict()))
-#     sys.stdout.flush()
-print(json.dumps(recommendations['ID'].to_json(orient='records')[1:-1].replace('},{', '} {')))
+print(recommendations.to_json(orient='records'))
 
 
 # recommend(read_user_likes_raw_data('random_admin'))

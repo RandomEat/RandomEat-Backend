@@ -6,8 +6,9 @@ require('./models/mongo')
 const Restaurant = require('./models/restaurant')
 const User = require('./models/user');
 const { join } = require('path');
-const APPID = ""
-const SECRET = ""
+require('dotenv').config();
+const APPID = process.env.APPID
+const SECRET = process.env.SECRET
 const defaultRestaurantsID = [126, 903, 939, 1535, 1801, 5091, 5875, 6781, 8307, 8477]
 
 app.use(express.urlencoded({
@@ -22,47 +23,50 @@ app.get('/getUserProfile', async (req, res) => {
     console.log(url)
     await axios.get(url)
     .then((response) => {
-        console.log(response)
         const { openid, session_key } = response.data;
+        if(openid === undefined){
+            res.status(404).send({
+                error: "invalid js_code"
+            });
+            return
+        }
         console.log('OpenID:', openid);
         console.log('SessionKey:', session_key);
+        User.findOne({ uid: openid})
+        .then(async (user) => {
+            if (user) {
+                // if existed user, return uid, newUser=false, userLikes, recommendations
+                console.log('User exists');
+                let recommendations = await getRecommendation(user);
+                let userLikes = await getRestaurants(user.likes);
+                const response = {
+                    uid: openid,
+                    newUser: false,
+                    userLikes: userLikes,
+                    recommendations: recommendations
+                };
+                res.status(200).send(response);
+            } else {
+                // if new user return uid, newUser=true, 10 restaurants for profile setup
+                console.log('User does not exist');
+                User.create({uid: openid});
+                var defaultRestaurants = await getRestaurants(defaultRestaurantsID);
+                const response = {
+                    uid: openid,
+                    newUser: true,
+                    defaultRestaurants: defaultRestaurants
+                };
+                res.json(response);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     })
     .catch((error) => {
         console.error('Error:', error);
     });
     // openid = 'random_admin'
-    User.findOne({ uid: openid })
-    .then(async (user) => {
-        if (user) {
-            // if existed user, return uid, newUser=false, userLikes, recommendations
-            console.log('User exists');
-            let recommendations = await getRecommendation(user);
-            const response = {
-                uid: openid,
-                newUser: false,
-                userLikes: user.likes,
-                recommendations: recommendations
-            };
-            res.status(200).send(response);
-        } else {
-            // if new user return uid, newUser=true, 10 restaurants for profile setup
-            console.log('User does not exist');
-            var defaultRestaurants = [];
-            defaultRestaurantsID.forEach(async (id) => {
-                let restaurant = await Restaurant.findOne({uid: id});
-                defaultRestaurants.push(restaurant);
-            });
-            const response = {
-                uid: openid,
-                newUser: true,
-                defaultRestaurants: defaultRestaurants
-            };
-            res.json(response);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
 })
 
 
@@ -90,6 +94,20 @@ app.post('/postUserNewLikes', async (req, res) => {
     // return userLikes, recommendations
 })
 
+function findResById(id) {
+    return new Promise((resolve, reject) => {
+        Restaurant.findOne({restaurantId: id})
+        .then((res) => {
+            resolve(res);
+        });
+    });
+}
+
+async function getRestaurants(likes){
+    const promises = likes.map((id) => findResById(id));
+    const userLikes = await Promise.all(promises);
+    return userLikes;
+}
 
 async function getRecommendation(user){
     return new Promise ((resolve, reject) => {
@@ -106,9 +124,8 @@ async function getRecommendation(user){
         // });
         pythonProcess.on('close', (code) => {
             const parsedData = JSON.parse(jsonData);
-            let restaurantIDs = parsedData.split(',').map(Number);
-            console.log(restaurantIDs);
-            resolve(restaurantIDs)
+            console.log(parsedData);
+            resolve(parsedData)
         });
     });
 }

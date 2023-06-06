@@ -23,19 +23,14 @@ def read_all_restaurant():
     for item in restaurant_collection.find():
         all_restaurant_id.append(item['restaurantId'])
 
-    # fetching testing data
     raw_data = []
     for restaurant_ID in all_restaurant_id:
         restaurant = restaurant_collection.find_one(
             {'restaurantId': int(restaurant_ID)},
-            {
-                '_id': 0,
-                'restaurantPhoto': 0,
-                'location.region': 0
-            })
-        # restaurant['location'] =
+            {'_id': 0})
         raw_data.append(restaurant)
     data = []
+    all_data = []
     for res in raw_data:
         data.append([res['restaurantId'],
                      res['restaurantName'],
@@ -44,7 +39,15 @@ def read_all_restaurant():
                      res['rate'],
                      res['location']['lat'],
                      res['location']['lon']])
-    return data
+        all_data.append([res['restaurantId'],
+                         res['restaurantName'],
+                         list(set(res['category'])),
+                         res.get('price', 20),
+                         res['rate'],
+                         res['location']['lat'],
+                         res['location']['lon'],
+                         res['restaurantPhoto']])
+    return data, all_data
 
 
 def read_user_likes_raw_data(uid):
@@ -72,8 +75,9 @@ def price_mapping(price):
         return 'fine-dining'
 
 
-def preprocess_data(raw_data):
-    df = pd.DataFrame(raw_data, columns=['ID', 'Name', 'Category', 'Price', 'Rate', 'lat', 'lon'])
+def preprocess_data(data, all_data):
+    df = pd.DataFrame(data, columns=['ID', 'Name', 'Category', 'Price', 'Rate', 'lat', 'lon'])
+    df2 = pd.DataFrame(all_data, columns=['ID', 'Name', 'Category', 'Price', 'Rate', 'lat', 'lon', 'Picture'])
     df['Price'] = df['Price'].apply(price_mapping)
     df['Category'] = df['Category'].str.join(',')
     # df['Distance'] = df.apply(lambda row: haversine_distances(
@@ -91,4 +95,4 @@ def preprocess_data(raw_data):
     df = df.drop('Name', axis=1)
     df = df.drop('Category', axis=1)
     # print(df.to_string())
-    return df
+    return df, df2
