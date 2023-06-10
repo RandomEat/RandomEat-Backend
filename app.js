@@ -75,7 +75,9 @@ app.post('/deleteUser', async (req, res) => {
     console.log(uid)
     await User.findOneAndDelete({uid: uid})
     .then((user) => {
-        res.status(200).send({})
+        res.status(200).send({
+            success: true
+        })
     })
 });
 
@@ -94,7 +96,7 @@ app.post('/postUserNewLikes', async (req, res) => {
         {$push: {likes: {$each: newLikes}}}
     ).then((user) => {
         console.log('update user likes successfully');
-        res.status(200).send(user.likes)
+        res.status(200).send(user.likes);
     })
 
     if(newUser){
@@ -121,6 +123,7 @@ async function getRestaurants(likes){
 
 async function getRecommendation(user){
     return new Promise ((resolve, reject) => {
+        console.log(user.likes);
         const pythonProcess = spawn('python3', ['recommender/recommender.py', JSON.stringify(user.likes)]);
         let jsonData = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -133,6 +136,7 @@ async function getRecommendation(user){
         //     return data
         // });
         pythonProcess.on('close', (code) => {
+            console.log(jsonData);
             const parsedData = JSON.parse(jsonData);
             console.log(parsedData);
             resolve(parsedData)
