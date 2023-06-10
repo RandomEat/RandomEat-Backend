@@ -123,7 +123,7 @@ async function getRestaurants(likes){
 
 async function getRecommendation(user){
     return new Promise ((resolve, reject) => {
-        console.log(user.likes);
+        // console.log(user.likes);
         const pythonProcess = spawn('python3', ['recommender/recommender.py', JSON.stringify(user.likes)]);
         let jsonData = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -136,9 +136,9 @@ async function getRecommendation(user){
         //     return data
         // });
         pythonProcess.on('close', (code) => {
-            console.log(jsonData);
+            // console.log(jsonData);
             const parsedData = JSON.parse(jsonData);
-            console.log(parsedData);
+            // console.log(parsedData);
             resolve(parsedData)
         });
     });
