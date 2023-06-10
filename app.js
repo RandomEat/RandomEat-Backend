@@ -69,6 +69,16 @@ app.get('/getUserProfile', async (req, res) => {
     // openid = 'random_admin'
 })
 
+// delete user
+app.post('/deleteUser', async (req, res) => {
+    const uid = req.query.uid;
+    console.log(uid)
+    await User.findOneAndDelete({uid: uid})
+    .then((user) => {
+        res.status(200).send({})
+    })
+});
+
 
 // post user new likes 
 app.post('/postUserNewLikes', async (req, res) => {
