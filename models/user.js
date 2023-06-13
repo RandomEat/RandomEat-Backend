@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     uid: String,
-    likes: [Number]
+    likes: [Number],
+    recommendations: [Number]
 })
 
 const User = mongoose.model('User', userSchema);

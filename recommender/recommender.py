@@ -1,14 +1,19 @@
 import ast
-import json
+import os
 import sys
+from pymongo import MongoClient
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from dataProcessing import read_all_restaurant, preprocess_data
-from dataProcessing import read_user_likes_raw_data
+client = MongoClient(os.getenv('MONGODB_HOST', os.getenv('MONGODB_PORT')))
+db = client.random  # database
+restaurant_collection = db.restaurants  # collection
+user_collection = db.users
 
 
 # def recommend(user_likes):
-user_likes = ast.literal_eval(sys.argv[1])
+uid = sys.argv[1]
+user_likes = ast.literal_eval(sys.argv[2])
 sys.stdout.flush()
 data, pictures = read_all_restaurant()
 preprocessed_all_data, all_data = preprocess_data(data, pictures)
@@ -26,7 +31,15 @@ cosine_similarities = cosine_similarity(user_matrix, tfidf_matrix)
 all_data['similarity'] = cosine_similarities[0]
 recommendations = all_data[~all_data['ID'].isin(user_likes)]
 recommendations.sort_values(by='similarity', ascending=False, inplace=True)
-print(recommendations.to_json(orient='records'))
+
+filters = {'uid': uid}
+update = {'$set': {'recommendations': recommendations['ID'].tolist()}}  # Use $push to add a value to the array field
+result = user_collection.update_one(filters, update)
+if result.matched_count > 0:
+    print('0')
+else:
+    print('1')
+# print(recommendations.to_json(orient='records'))
 
 
 # recommend(read_user_likes_raw_data('random_admin'))

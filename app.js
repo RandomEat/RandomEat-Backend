@@ -23,21 +23,22 @@ app.get('/getUserProfile', async (req, res) => {
     console.log(url)
     await axios.get(url)
     .then((response) => {
-        const { openid, session_key } = response.data;
-        if(openid === undefined){
-            res.status(404).send({
-                error: "invalid js_code"
-            });
-            return
-        }
-        console.log('OpenID:', openid);
-        console.log('SessionKey:', session_key);
+        // const { openid, session_key } = response.data;
+        // if(openid === undefined){
+        //     res.status(404).send({
+        //         error: "invalid js_code"
+        //     });
+        //     return
+        // }
+        // console.log('OpenID:', openid);
+        // console.log('SessionKey:', session_key);
+        const openid = 'random_admin' // Testing
         User.findOne({ uid: openid})
         .then(async (user) => {
             if (user) {
                 // if existed user, return uid, newUser=false, userLikes, recommendations
                 console.log('User exists');
-                let recommendations = await getRecommendation(user);
+                let recommendations = await getRestaurants(user.recommendations);
                 let userLikes = await getRestaurants(user.likes);
                 const response = {
                     uid: openid,
@@ -66,7 +67,6 @@ app.get('/getUserProfile', async (req, res) => {
     .catch((error) => {
         console.error('Error:', error);
     });
-    // openid = 'random_admin'
 })
 
 // delete user
@@ -85,25 +85,30 @@ app.post('/deleteUser', async (req, res) => {
 // post user new likes 
 app.post('/postUserNewLikes', async (req, res) => {
     let uid = req.query.uid; // uid
-    let newUser = req.body.newUser;// bool flag
     let newLikes = req.body.newLikes;
     console.log(uid)
-    console.log(newUser)
     console.log(newLikes)
     // check flag if needs to send recommendations
     User.findOneAndUpdate(
         {uid: uid}, 
-        {$push: {likes: {$each: newLikes}}}
-    ).then((user) => {
+        {$push: {likes: {$each: newLikes}}},
+        {new: true}
+    ).then(async (user) => {
         console.log('update user likes successfully');
-        res.status(200).send(user.likes);
+        generateRecommendation(user)
+        .then((err)=>{
+            if(err){
+                res.status(404).send();
+            }
+            else{
+                const response = {
+                    uid: uid,
+                    userLikes: user.likes,
+                };
+                res.status(200).send(response);
+            }
+        })
     })
-
-    if(newUser){
-
-    }
-    // if newUser
-    // return userLikes, recommendations
 })
 
 function findResById(id) {
@@ -115,32 +120,33 @@ function findResById(id) {
     });
 }
 
-async function getRestaurants(likes){
-    const promises = likes.map((id) => findResById(id));
-    const userLikes = await Promise.all(promises);
-    return userLikes;
+async function getRestaurants(restaurantIds){
+    const promises = restaurantIds.map((id) => findResById(id));
+    const restaurants = await Promise.all(promises);
+    return restaurants;
 }
 
-async function getRecommendation(user){
+async function generateRecommendation(user){
     return new Promise ((resolve, reject) => {
         // console.log(user.likes);
-        const pythonProcess = spawn('python3', ['recommender/recommender.py', JSON.stringify(user.likes)]);
-        let jsonData = '';
+        const pythonProcess = spawn('python3', ['recommender/recommender.py', user.uid, JSON.stringify(user.likes)]);
+        // let err = '';
         pythonProcess.stdout.on('data', (data) => {
             // console.log("get recommendations successful")
-            jsonData += data.toString()
+            console.log(Number(data.toString()));
+            resolve(Number(data.toString()))
         });
 
         // pythonProcess.stderr.on('data', (data) => {
         //     console.log("get recommendations unsuccessful")
-        //     return data
+        //     console.log(data)
         // });
-        pythonProcess.on('close', (code) => {
-            // console.log(jsonData);
-            const parsedData = JSON.parse(jsonData);
-            // console.log(parsedData);
-            resolve(parsedData)
-        });
+        // pythonProcess.on('close', (code) => {
+        //     // console.log(jsonData);
+        //     // const parsedData = JSON.parse(jsonData);
+        //     // // console.log(parsedData);
+        //     // resolve(parsedData)
+        // });
     });
 }
 
