@@ -23,16 +23,16 @@ app.get('/getUserProfile', async (req, res) => {
     console.log(url)
     await axios.get(url)
     .then((response) => {
-        // const { openid, session_key } = response.data;
-        // if(openid === undefined){
-        //     res.status(404).send({
-        //         error: "invalid js_code"
-        //     });
-        //     return
-        // }
-        // console.log('OpenID:', openid);
-        // console.log('SessionKey:', session_key);
-        const openid = 'random_admin' // Testing
+        const { openid, session_key } = response.data;
+        if(openid === undefined){
+            res.status(404).send({
+                error: "invalid js_code"
+            });
+            return
+        }
+        console.log('OpenID:', openid);
+        console.log('SessionKey:', session_key);
+        //const openid = 'random_admin' // Testing
         User.findOne({ uid: openid})
         .then(async (user) => {
             if (user) {
