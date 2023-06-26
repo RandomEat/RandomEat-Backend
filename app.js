@@ -81,6 +81,19 @@ app.post('/deleteUser', async (req, res) => {
     })
 });
 
+// get user likes
+app.get('/getUserLikes', async (req, res) => {
+    let uid = req.query.uid; // uid
+    User.findOne({ uid: uid})
+    .then(async (user) => {
+        let userLikes = await getRestaurants(user.likes);
+        const response = {
+            uid: uid,
+            userLikes: userLikes,
+        };
+        res.status(200).send(response);
+    })
+})
 
 // post user new likes 
 app.post('/postUserNewLikes', async (req, res) => {
