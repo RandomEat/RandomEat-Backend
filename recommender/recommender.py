@@ -1,6 +1,7 @@
 import ast
 import os
 import sys
+from collections import Counter
 from pymongo import MongoClient
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -32,8 +33,14 @@ all_data['similarity'] = cosine_similarities[0]
 recommendations = all_data[~all_data['ID'].isin(user_likes)]
 recommendations.sort_values(by='similarity', ascending=False, inplace=True)
 
+keywords = user_profile.split()
+counts = Counter(keywords)
+keywords = sorted(counts, key=lambda x: counts[x], reverse=True)
 filters = {'uid': uid}
-update = {'$set': {'recommendations': recommendations['ID'].tolist()}}  # Use $push to add a value to the array field
+update = {'$set': {
+    'recommendations': recommendations['ID'].tolist(),
+    'keywords': keywords,
+}}  # Use $push to add a value to the array field
 result = user_collection.update_one(filters, update)
 if result.matched_count > 0:
     print('0')

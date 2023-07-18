@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     uid: String,
     likes: [Number],
-    recommendations: [Number]
+    favorites: [Number],
+    diningHistory: [Number],
+    keywords: [String],
+    recommendations: [Number],
+    
 })
 
 const User = mongoose.model('User', userSchema);

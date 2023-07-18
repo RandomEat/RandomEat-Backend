@@ -32,18 +32,22 @@ app.get('/getUserProfile', async (req, res) => {
         }
         console.log('OpenID:', openid);
         console.log('SessionKey:', session_key);
-        //const openid = 'random_admin' // Testing
+        // const openid = 'random_admin' // Testing
         User.findOne({ uid: openid})
         .then(async (user) => {
             if (user) {
                 // if existed user, return uid, newUser=false, userLikes, recommendations
                 console.log('User exists');
                 let recommendations = await getRestaurants(user.recommendations);
-                let userLikes = await getRestaurants(user.likes);
+                let userFavorites = await getRestaurants(user.favorites);
+                let userDiningHistory = await getRestaurants(user.diningHistory);
+                let userKeywords = user.keywords;
                 const response = {
                     uid: openid,
                     newUser: false,
-                    userLikes: userLikes,
+                    userFavorites: userFavorites,
+                    userDiningHistory: userDiningHistory,
+                    userKeywords: userKeywords,
                     recommendations: recommendations
                 };
                 res.status(200).send(response);
@@ -81,19 +85,6 @@ app.post('/deleteUser', async (req, res) => {
     })
 });
 
-// get user likes
-app.get('/getUserLikes', async (req, res) => {
-    let uid = req.query.uid; // uid
-    User.findOne({ uid: uid})
-    .then(async (user) => {
-        let userLikes = await getRestaurants(user.likes);
-        const response = {
-            uid: uid,
-            userLikes: userLikes,
-        };
-        res.status(200).send(response);
-    })
-})
 
 // post user new likes 
 app.post('/postUserNewLikes', async (req, res) => {
@@ -124,6 +115,123 @@ app.post('/postUserNewLikes', async (req, res) => {
     })
 })
 
+// 收藏接口 (post, get, delete）
+
+// get user favorites
+app.get('/getUserFavorites', async (req, res) => {
+    let uid = req.query.uid; // uid
+    User.findOne({ uid: uid})
+    .then(async (user) => {
+        let userFavorites = await getRestaurants(user.favorites);
+        const response = {
+            uid: uid,
+            userFavorites: userFavorites,
+        };
+        res.status(200).send(response);
+    })
+})
+
+// post user new favorite 
+app.post('/postUserNewFavorite', async (req, res) => {
+    let uid = req.query.uid; // uid
+    let newFavorite = req.query.restaurantId;
+    // check flag if needs to send recommendations
+    User.findOneAndUpdate(
+        {uid: uid}, 
+        {$addToSet: {favorites: newFavorite}},
+        {new: true}
+    ).then(async (user) => {
+        console.log('update user favorites successfully');
+        generateRecommendation(user)
+        .then((err)=>{
+            if(err){
+                res.status(404).send();
+            }
+            else{
+                const response = {
+                    uid: uid,
+                    userFavorites: user.favorites,
+                };
+                res.status(200).send(response);
+            }
+        })
+    })
+})
+
+
+// delete user favorites
+app.post('/deleteUserFavorite', async (req, res) => {
+    let uid = req.query.uid;
+    let restaurantId = req.query.restaurantId;
+    
+    User.findOneAndUpdate(
+        {uid: uid}, 
+        {$pull: {favorites: restaurantId}},
+        {new: true}
+    ).then(async (user) => {
+        console.log('update user favorites successfully');
+        generateRecommendation(user)
+        .then((err)=>{
+            if(err){
+                res.status(404).send();
+            }
+            else{
+                const response = {
+                    uid: uid,
+                    userFavorites: user.favorites,
+                };
+                res.status(200).send(response);
+            }
+        })
+    })
+})
+
+// 足迹接口  (post)
+
+// post user new dining history 
+app.post('/postUserNewDiningHistory', async (req, res) => {
+    let uid = req.query.uid; // uid
+    let newDiningHistory = req.query.restaurantId;
+    // check flag if needs to send recommendations
+    User.findOneAndUpdate(
+        {uid: uid}, 
+        {$push: {diningHistory: newDiningHistory}},
+        {new: true}
+    ).then(async (user) => {
+        console.log('update user favorites successfully');
+        generateRecommendation(user)
+        .then((err)=>{
+            if(err){
+                res.status(404).send();
+            }
+            else{
+                const response = {
+                    uid: uid,
+                    userDiningHistory: user.diningHistory,
+                };
+                res.status(200).send(response);
+            }
+        })
+    })
+})
+
+// 关键词接口 (get) 
+
+// get user favorites
+app.get('/getUserKeywords', async (req, res) => {
+    let uid = req.query.uid; // uid
+    User.findOne({ uid: uid})
+    .then(async (user) => {
+        const response = {
+            uid: uid,
+            userKeywords: user.keywords,
+        };
+        res.status(200).send(response);
+    })
+})
+
+
+
 function findResById(id) {
     return new Promise((resolve, reject) => {
         Restaurant.findOne({restaurantId: id})
@@ -140,26 +248,18 @@ async function getRestaurants(restaurantIds){
 }
 
 async function generateRecommendation(user){
+    var userProfile = user.likes.concat(user.favorites);
+    let uniques = new Set(userProfile);
+    userProfile = Array.from(uniques);
     return new Promise ((resolve, reject) => {
         // console.log(user.likes);
-        const pythonProcess = spawn('python3', ['recommender/recommender.py', user.uid, JSON.stringify(user.likes)]);
+        const pythonProcess = spawn('python3', ['recommender/recommender.py', user.uid, JSON.stringify(userProfile)]);
         // let err = '';
         pythonProcess.stdout.on('data', (data) => {
             // console.log("get recommendations successful")
             console.log(Number(data.toString()));
             resolve(Number(data.toString()))
         });
-
-        // pythonProcess.stderr.on('data', (data) => {
-        //     console.log("get recommendations unsuccessful")
-        //     console.log(data)
-        // });
-        // pythonProcess.on('close', (code) => {
-        //     // console.log(jsonData);
-        //     // const parsedData = JSON.parse(jsonData);
-        //     // // console.log(parsedData);
-        //     // resolve(parsedData)
-        // });
     });
 }
 
