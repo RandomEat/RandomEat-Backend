@@ -16,6 +16,7 @@ app.use(express.urlencoded({
 }))
 app.use(express.json());  
 
+
 // get user uid
 app.get('/getUserProfile', async (req, res) => {
     let code = req.query.userCode; // userCode
@@ -77,7 +78,7 @@ app.get('/getUserProfile', async (req, res) => {
 app.post('/deleteUser', async (req, res) => {
     const uid = req.query.uid;
     console.log(uid)
-    await User.findOneAndDelete({uid: uid})
+    User.findOneAndDelete({uid: uid})
     .then((user) => {
         res.status(200).send({
             success: true
