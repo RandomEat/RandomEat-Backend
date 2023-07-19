@@ -116,30 +116,16 @@ app.post('/postUserNewLikes', async (req, res) => {
     })
 })
 
-// 收藏接口 (post, get, delete）
-
-// get user favorites
-app.get('/getUserFavorites', async (req, res) => {
-    let uid = req.query.uid; // uid
-    User.findOne({ uid: uid})
-    .then(async (user) => {
-        let userFavorites = await getRestaurants(user.favorites);
-        const response = {
-            uid: uid,
-            userFavorites: userFavorites,
-        };
-        res.status(200).send(response);
-    })
-})
+// 收藏接口 (post）
 
 // post user new favorite 
-app.post('/postUserNewFavorite', async (req, res) => {
+app.post('/postUserNewFavorites', async (req, res) => {
     let uid = req.query.uid; // uid
-    let newFavorite = req.query.restaurantId;
+    let newFavorites = req.data.userFavorites;
     // check flag if needs to send recommendations
     User.findOneAndUpdate(
         {uid: uid}, 
-        {$addToSet: {favorites: newFavorite}},
+        {favorites: newFavorites},
         {new: true}
     ).then(async (user) => {
         console.log('update user favorites successfully');
@@ -159,33 +145,6 @@ app.post('/postUserNewFavorite', async (req, res) => {
     })
 })
 
-
-// delete user favorites
-app.post('/deleteUserFavorite', async (req, res) => {
-    let uid = req.query.uid;
-    let restaurantId = req.query.restaurantId;
-    
-    User.findOneAndUpdate(
-        {uid: uid}, 
-        {$pull: {favorites: restaurantId}},
-        {new: true}
-    ).then(async (user) => {
-        console.log('update user favorites successfully');
-        generateRecommendation(user)
-        .then((err)=>{
-            if(err){
-                res.status(404).send();
-            }
-            else{
-                const response = {
-                    uid: uid,
-                    userFavorites: user.favorites,
-                };
-                res.status(200).send(response);
-            }
-        })
-    })
-})
 
 // 足迹接口  (post)
 
@@ -215,22 +174,6 @@ app.post('/postUserNewDiningHistory', async (req, res) => {
         })
     })
 })
-
-// 关键词接口 (get) 
-
-// get user favorites
-app.get('/getUserKeywords', async (req, res) => {
-    let uid = req.query.uid; // uid
-    User.findOne({ uid: uid})
-    .then(async (user) => {
-        const response = {
-            uid: uid,
-            userKeywords: user.keywords,
-        };
-        res.status(200).send(response);
-    })
-})
-
 
 
 function findResById(id) {
