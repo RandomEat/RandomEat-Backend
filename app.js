@@ -121,7 +121,7 @@ app.post('/postUserNewLikes', async (req, res) => {
 // post user new favorite 
 app.post('/postUserNewFavorites', async (req, res) => {
     let uid = req.query.uid; // uid
-    let newFavorites = req.data.userFavorites;
+    let newFavorites = req.body.userFavorites;
     // check flag if needs to send recommendations
     User.findOneAndUpdate(
         {uid: uid}, 
