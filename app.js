@@ -41,7 +41,21 @@ app.get('/getUserProfile', async (req, res) => {
                 console.log('User exists');
                 let recommendations = await getRestaurants(user.recommendations);
                 let userFavorites = await getRestaurants(user.favorites);
-                let userDiningHistory = await getRestaurants(user.diningHistory);
+                let userDiningHistoryRestaurantIds = [];
+                let userDiningHistoryTimestamps = []
+                for(let i = 0; i < user.diningHistory.length; i++){
+                    userDiningHistoryRestaurantIds.push(user.diningHistory[i].restaurantId);
+                    userDiningHistoryTimestamps.push(user.diningHistory[i].timestamp);
+                }
+                let userDiningHistoryRestaurants = await getRestaurants(userDiningHistoryRestaurantIds);
+                let userDiningHistory = [];
+                for(let i = 0; i < user.diningHistory.length; i++){
+                    userDiningHistory.push({
+                        restaurant: userDiningHistoryRestaurants[i],
+                        timestamp: userDiningHistoryTimestamps[i]
+                    })
+                }
+                
                 let userKeywords = user.keywords;
                 const response = {
                     uid: openid,
@@ -151,7 +165,7 @@ app.post('/postUserNewFavorites', async (req, res) => {
 // post user new dining history 
 app.post('/postUserNewDiningHistory', async (req, res) => {
     let uid = req.query.uid; // uid
-    let newDiningHistory = req.query.restaurantId;
+    let newDiningHistory = req.body.diningHistory;
     // check flag if needs to send recommendations
     User.findOneAndUpdate(
         {uid: uid}, 
