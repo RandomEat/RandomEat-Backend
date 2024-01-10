@@ -22,7 +22,7 @@ def main():
             collection.delete_one(item)
     print("finish removing duplicates")
     print("number of removed duplicate:", count)
-    print("number of documents remaining:", i - count)
+    print("number of documents remaining:", i - count - 1)
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ def main():
         i += 1
         if restaurant_data['type'] == "normal":
             out_data.append(parse_one_object(restaurant_data['dataModule']['restaurant']))
-    with open('output.json', "a") as out_f:
+    with open('output.json', "w") as out_f:
         json.dump(out_data, out_f, indent=2, ensure_ascii=False)
     print("parsing finishes")
 
