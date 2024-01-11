@@ -30,7 +30,9 @@ user_matrix = vec.transform([user_profile])
 cosine_similarities = cosine_similarity(user_matrix, tfidf_matrix)
 # print(cosine_similarities)
 all_data['similarity'] = cosine_similarities[0]
-recommendations = all_data[~all_data['ID'].isin(user_likes)]
+# recommendations = all_data[~all_data['ID'].isin(user_likes)]
+recommendations = all_data
+print(len(recommendations))
 recommendations.sort_values(by='similarity', ascending=False, inplace=True)
 
 keywords = user_profile.split()

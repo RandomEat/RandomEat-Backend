@@ -143,19 +143,12 @@ app.post('/postUserNewFavorites', async (req, res) => {
         {new: true}
     ).then(async (user) => {
         console.log('update user favorites successfully');
+        const response = {
+            uid: uid,
+            userFavorites: user.favorites,
+        };
+        res.status(200).send(response);
         generateRecommendation(user)
-        .then((err)=>{
-            if(err){
-                res.status(404).send();
-            }
-            else{
-                const response = {
-                    uid: uid,
-                    userFavorites: user.favorites,
-                };
-                res.status(200).send(response);
-            }
-        })
     })
 })
 
@@ -173,19 +166,12 @@ app.post('/postUserNewDiningHistory', async (req, res) => {
         {new: true}
     ).then(async (user) => {
         console.log('update user favorites successfully');
-        generateRecommendation(user)
-        .then((err)=>{
-            if(err){
-                res.status(404).send();
-            }
-            else{
-                const response = {
-                    uid: uid,
-                    userDiningHistory: user.diningHistory,
-                };
-                res.status(200).send(response);
-            }
-        })
+        const response = {
+            uid: uid,
+            userDiningHistory: user.diningHistory,
+        };
+        res.status(200).send(response);
+        generateRecommendation(user);
     })
 })
 
