@@ -100,6 +100,37 @@ app.post('/deleteUser', async (req, res) => {
     })
 });
 
+// create user profile
+app.post('/createUserProfile', async (req, res) => {
+    let uid = req.query.uid; // uid
+    let defaultLikes = req.body.defaultLikes;
+    console.log(uid)
+    console.log(defaultLikes)
+    // check flag if needs to send recommendations
+    User.findOneAndUpdate(
+        {uid: uid}, 
+        {$push: {likes: {$each: defaultLikes}}},
+        {new: true}
+    ).then(async (user) => {
+        console.log('create user profile successfully');
+        generateRecommendation(user)
+        .then((err)=>{
+            if(err){
+                res.status(404).send();
+            }
+            else{
+                const response = {
+                    uid: uid,
+                    userFavorites: user.favorites,
+                    userDiningHistory: user.diningHistory,
+                    userKeywords: user.keywords,
+                    recommendations: user.recommendations
+                };
+                res.status(200).send(response);
+            }
+        })
+    })
+})
 
 // post user new likes 
 app.post('/postUserNewLikes', async (req, res) => {
@@ -114,19 +145,12 @@ app.post('/postUserNewLikes', async (req, res) => {
         {new: true}
     ).then(async (user) => {
         console.log('update user likes successfully');
-        generateRecommendation(user)
-        .then((err)=>{
-            if(err){
-                res.status(404).send();
-            }
-            else{
-                const response = {
-                    uid: uid,
-                    userLikes: user.likes,
-                };
-                res.status(200).send(response);
-            }
-        })
+        const response = {
+            uid: uid,
+            userLikes: user.likes,
+        };
+        res.status(200).send(response);
+        generateRecommendation(user);
     })
 })
 
@@ -148,7 +172,7 @@ app.post('/postUserNewFavorites', async (req, res) => {
             userFavorites: user.favorites,
         };
         res.status(200).send(response);
-        generateRecommendation(user)
+        generateRecommendation(user);
     })
 })
 
